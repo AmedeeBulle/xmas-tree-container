@@ -1,0 +1,22 @@
+# Docker-compose file for the PiHut XMas trees
+
+# Version 2.1 for Balena compatibility
+version: '2.1'
+
+services:
+  xmas-tree:
+    build:
+      context: xmas-tree
+      args:
+        MACHINE_NAME:
+    image: xmas-tree
+    restart: always
+    environment:
+      XMAS_TREE_TYPE: ${XMAS_TREE_TYPE}
+      XMAS_DELAY: ${XMAS_DELAY}
+      IS_CONTAINER: 1
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/mem
+

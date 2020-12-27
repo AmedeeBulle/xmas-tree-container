@@ -1,0 +1,15 @@
+# The PiHut XMas trees
+ARG MACHINE_NAME
+
+FROM balenalib/${MACHINE_NAME:-%%BALENA_MACHINE_NAME%%}-debian:buster
+
+RUN apt-get update && \
+    apt-get install python3 python3-rpi.gpio python3-gpiozero python3-colorzero && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/xmas-tree
+
+COPY *.py /opt/xmas-tree/
+
+CMD ["/usr/bin/python3", "/opt/xmas-tree/xmas-tree.py"]
