@@ -10,6 +10,7 @@ Included _scenarios_:
 
 - Original tree:
   - red
+  - red-random: randomly sparkle pixels
 - RGB Tree:
   - rgb / rgb-rainbow: rainbow effect
   - rgb-cycle: cycle through red, green and blue, changing pixel-by-pixel

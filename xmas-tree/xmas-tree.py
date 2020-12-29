@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from os import environ
-from random import choice, randrange
+from random import choice, random, randrange
 from signal import pause
 from sys import stdout
 from time import sleep
@@ -23,6 +23,25 @@ def red(delay: float = 1.0) -> None:
             led.source_delay = delay
             led.source = scaled(random_values(), 0, 0.5)
     pause()
+
+
+def red_random(delay: float = 0.1) -> None:
+    """Random sparkles for the V1 (red LED's) tree."""
+    ports = [2] + list(range(4, 28))
+    tree = LEDBoard(*ports, pwm=True)
+    try:
+        while True:
+            led = choice(tree)
+            if led.is_lit:
+                led.off()
+            else:
+                led.value = 0.25 + random() / 2
+            if delay:
+                sleep(delay)
+    except Exception as e:
+        print(e)
+        tree.off()
+        tree.close()
 
 
 def rgb_rainbow(delay: float = None) -> None:
@@ -119,6 +138,7 @@ def rgb_random_half(delay: float = None) -> None:
 # Map XMAS_TREE_TYPE to scenarios
 tree_map = {
     'red': red,
+    'red-random': red_random,
     'rgb': rgb_rainbow,
     'rgb-rainbow': rgb_rainbow,
     'rgb-cycle': rgb_cycle,
